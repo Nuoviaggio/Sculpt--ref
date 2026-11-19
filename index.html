@@ -76,7 +76,16 @@ footer a{color:var(--accent)}
 .terms ol{margin-top:8px;padding-left:20px}
 .terms li{font-size:12.5px;margin:5px 0}
 .credit{margin-top:14px;text-align:center;color:var(--accent);font-size:13.5px;letter-spacing:.03em}
-@media (max-width:600px){.en{display:block;margin:0}.searchrow{flex-wrap:wrap}}
+@media (max-width:600px){.en{display:block;margin:0}.searchrow{flex-wrap:wrap}
+  header{padding:12px 14px 10px}
+  header .wrap{display:flex;flex-direction:column}
+  header h1{order:1}header .sub{order:2}
+  header .chips{order:3;margin:0 0 10px}
+  header .searchrow{order:4}
+  .sbox{flex:1 1 100%}
+  .searchrow .btn{flex:1;padding:8px 4px;font-size:12.5px}
+  main{padding:12px 14px 60px}
+}
 </style>
 </head>
 <body>
@@ -335,7 +344,12 @@ document.addEventListener("keydown",e=>{if(e.key==="/"&&document.activeElement!=
 document.getElementById("favBtn").onclick=e=>{onlyFav=!onlyFav;e.currentTarget.classList.toggle("on",onlyFav);render()};
 document.getElementById("keyBtn").onclick=e=>{keyView=!keyView;e.currentTarget.classList.toggle("on",keyView);render()};
 document.getElementById("expBtn").onclick=e=>{allOpen=!allOpen;e.currentTarget.textContent=allOpen?"全部收合":"全部展開";render()};
-render();
+function stick(){
+  const hd=document.querySelector("header"),sr=document.querySelector(".searchrow");
+  hd.style.top=window.innerWidth<=600?(-(sr.offsetTop-8))+"px":"0";
+}
+window.addEventListener("resize",stick);
+render();stick();
 if("serviceWorker" in navigator&&location.protocol==="https:"){try{navigator.serviceWorker.register("sw.js").catch(()=>{})}catch(e){}}
 </script>
 </body>
